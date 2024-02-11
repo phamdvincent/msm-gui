@@ -30,6 +30,23 @@ class DirectorsController < ApplicationController
     end
   end
 
+  def update
+    path_id = params.fetch("path_id")
+    @director = Director.where({ :id => path_id }).at(0)
+
+    @director.name = params.fetch("query_name")
+    @director.dob = params.fetch("query_dob")
+    @director.bio = params.fetch("query_bio")
+    @director.image = params.fetch("query_image")
+
+    if @director.valid?
+      @director.save
+      redirect_to("/directors/#{@director.id}", { :notice => "Director updated successfully." })
+    else
+      redirect_to("/directors/#{@director.id}", { :notice => "Director updated unsuccessfully." })
+    end
+  end
+
   def max_dob
     directors_by_dob_desc = Director.
       all.
