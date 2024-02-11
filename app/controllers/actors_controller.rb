@@ -45,4 +45,11 @@ class ActorsController < ApplicationController
       redirect_to("/actors/#{@actor.id}", { :notice => "Actor updated unsuccessfully." })
     end
   end
+
+  def destroy
+    path_id = params.fetch("path_id")
+    @actor = Actor.where({ :id => path_id }).at(0)
+    @actor.destroy
+    redirect_to("/actors", { :notice => "Actor deleted successfully" })
+  end
 end

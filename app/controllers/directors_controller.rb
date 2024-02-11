@@ -47,6 +47,13 @@ class DirectorsController < ApplicationController
     end
   end
 
+  def destroy
+    path_id = params.fetch("path_id")
+    @director = Director.where({ :id => path_id }).at(0)
+    @director.destroy
+    redirect_to("/directors", { :notice => "Director deleted successfully" })
+  end
+
   def max_dob
     directors_by_dob_desc = Director.
       all.
