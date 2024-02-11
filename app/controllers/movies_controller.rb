@@ -31,4 +31,23 @@ class MoviesController < ApplicationController
     redirect_to("/movies", { :notice => "Movie created unsuccessfully." })
     end
   end
+
+  def update
+    path_id = params.fetch("path_id")
+    @movie = Movie.where({ :id => path_id}).at(0)
+
+    @movie.title = params.fetch("query_title")
+    @movie.year = params.fetch("query_year")
+    @movie.duration = params.fetch("query_duration")
+    @movie.description = params.fetch("query_description")
+    @movie.image = params.fetch("query_image")
+    @movie.director_id = params.fetch("query_director_id")
+
+    if @movie.valid?
+      redirect_to("/movies/#{@movie.id}", { :notice => "Movie updated successfully" })
+    else
+      redirect_to("/movies/#{@movie.id}", { :notice => "Movie updated unsuccessfully" })
+    end
+  end
+  
 end
