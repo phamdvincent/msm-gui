@@ -44,6 +44,7 @@ class MoviesController < ApplicationController
     @movie.director_id = params.fetch("query_director_id")
 
     if @movie.valid?
+      @movie.save
       redirect_to("/movies/#{@movie.id}", { :notice => "Movie updated successfully" })
     else
       redirect_to("/movies/#{@movie.id}", { :notice => "Movie updated unsuccessfully" })

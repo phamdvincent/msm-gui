@@ -40,6 +40,7 @@ class ActorsController < ApplicationController
     @actor.image = params.fetch("query_image")
 
     if @actor.valid?
+      @actor.save
       redirect_to("/actors/#{@actor.id}", { :notice => "Actor updated successfully." })
     else
       redirect_to("/actors/#{@actor.id}", { :notice => "Actor updated unsuccessfully." })
