@@ -29,4 +29,20 @@ class ActorsController < ApplicationController
       redirect_to("/actors", { :notice => "Actor created unsuccessfully." })
     end
   end
+
+  def update
+    path_id = params.fetch("path_id")
+    @actor = Actor.where({ :id => path_id }).at(0)
+    
+    @actor.name = params.fetch("query_name")
+    @actor.dob = params.fetch("query_dob")
+    @actor.bio = params.fetch("query_bio")
+    @actor.image = params.fetch("query_image")
+
+    if @actor.valid?
+      redirect_to("/actors/#{@actor.id}", { :notice => "Actor updated successfully." })
+    else
+      redirect_to("/actors/#{@actor.id}", { :notice => "Actor updated unsuccessfully." })
+    end
+  end
 end
