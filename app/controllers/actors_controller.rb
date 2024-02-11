@@ -14,4 +14,19 @@ class ActorsController < ApplicationController
       
     render({ :template => "actor_templates/show" })
   end
+
+  def create
+    @actor = Actor.new
+    @actor.name = params.fetch("query_name")
+    @actor.dob = params.fetch("query_dob")
+    @actor.bio = params.fetch("query_bio")
+    @actor.image = params.fetch("query_image")
+
+    if @actor.valid?
+      @actor.save
+      redirect_to("/actors", { :notice => "Actor created successfully." })
+    else
+      redirect_to("/actors", { :notice => "Actor created unsuccessfully." })
+    end
+  end
 end
